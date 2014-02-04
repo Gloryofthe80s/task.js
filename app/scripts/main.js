@@ -70,12 +70,23 @@ $('.create-new-task').keypress(function(e) {
         $(this).val('');
     };
 
+    // on printed task hover
     $('.task-wrapper').on({
         mouseenter: function () {
             $(this).find('.task-btns').addClass('hovered');
         },
         mouseleave: function () {
             $(this).find('.task-btns').removeClass('hovered');
+        }
+    });
+
+    // on trash icon hover
+    $('.btn-trash-task').on({
+        mouseenter: function () {
+            $(this).addClass('hovered');
+        },
+        mouseleave: function () {
+            $(this).removeClass('hovered');
         }
     });
 });

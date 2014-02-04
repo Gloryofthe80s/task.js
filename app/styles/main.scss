@@ -9,6 +9,8 @@ $cream: #D1DBBD;
 $green: #91AA9D;
 $light-blue: #3E606F;
 $dark-blue: #193441;
+$success: rgba(89, 211, 73, 0.75);
+$red: rgba(255, 52, 52, 0.75);
 
 @mixin sexy-emboss($opacity:0.8, $opacity2:0.05) {
     box-shadow: 0 1px 0 rgba(255, 255, 255, $opacity),
@@ -123,7 +125,7 @@ body {
 .new-task-container {
     padding: 10px 0;
     text-align: center;
-    background-color: $cream;
+    background-color: $green;
     border-radius: 10px;
     @include sexy-emboss(0.8, 0.025);
 }
@@ -207,13 +209,17 @@ body {
     margin: 0 auto;
 
     &.active {
-        background-color: $light-blue;
+        background-color: $success;
     }
 }
 
 .btn-trash-task {
     display: inline-block;
     margin: 0 auto;
+
+    &.hovered {
+        background-color: $red;
+    }
 }
 
 .btn-new-task {
@@ -222,4 +228,5 @@ body {
 
 .footer {
     color: $dark-blue;
+    text-shadow: none;
 }
