@@ -33,7 +33,7 @@ $('.create-new-task').on('focusout', function() {
     $(this).css('text-align', 'center');
 });
 
-// submit task creation on enter keypress
+// submit task creation on enter keypress (and hover effects)
 $('.create-new-task').keypress(function(e) {
     if(e.which == 13 && $(this).val() != '') {
         var input = {
@@ -50,37 +50,57 @@ $('.create-new-task').keypress(function(e) {
 
         //clear the text input
         $(this).val('');
-    }
+    };
+
+    $('.task-wrapper').on({
+        mouseenter: function () {
+            $(this).find('.task-btns').addClass('hovered');
+        },
+        mouseleave: function () {
+            $(this).find('.task-btns').removeClass('hovered');
+        }
+    });
 });
-
-// on hover of printed task
-// $('.header').hover(function() {
-//     console.log('test');
-//     $(this).find('.task-btns').addClass('hovered');
-// }, function() {
-//     $(this).find('.task-btns').removeClass('hovered');
-// });
-
-$('.header').on({
-    mouseenter: function () {
-        console.log('test!');
-        // $(this).find('.task-btns').addClass('hovered');
-    },
-    mouseleave: function () {
-        console.log('test leave!')
-        // $(this).find('.task-btns').removeClass('hovered');
-    }
-});
-
 
 // on 'completed' button press
 $('.printed-task-container').on('click', '.btn-mark-completed', function() {
     $(this).closest('.task-wrapper').toggleClass('completed');
+    $(this).closest('.btn-mark-completed').toggleClass('active');
+
+    var taskToBeFlaggedCompleted = _.findWhere(taskArray, {uniqueId : $(this).closest('.task-wrapper').attr('data-uniqueid')});
+
+    _.each(taskArray, function(task, index) {
+        if(task.uniqueId == taskToBeFlaggedCompleted.uniqueId) {
+            if( $(taskToBeFlaggedCompleted).prop('complete') == false) {
+                $(taskToBeFlaggedCompleted).prop('complete', 'true');
+            } else {
+                $(taskToBeFlaggedCompleted).prop('complete', 'false');
+            }
+        } else {
+            console.log("couldn't find correct task object in array!")
+        }
+    });
+
+    // var changeToCompleted = function() {
+    //      _.each(taskArray, function(task, index) {
+    //         if (task.uniqueId == taskToBeFlaggedCompleted.uniqueId) {
+    //             $(taskToBeFlaggedCompleted).toggle(function() {
+    //                 $(taskToBeFlaggedCompleted).prop('complete', 'true');
+    //             }, function() {
+    //                 $(taskToBeFlaggedCompleted).prop('complete', 'false');
+    //             });
+    //         };
+    //     });
+    // };
+
+    // changeToCompleted();
 });
 
 // on 'trash' button press
 $('.printed-task-container').on('click', '.btn-trash-task', function() {
-    $(this).closest('.task-wrapper').remove();
+    $(this).closest('.task-wrapper').fadeOut('fast', function() {
+        $(this).closest('.task-wrapper').remove();
+    });
 
     var taskToBeDeleted = _.findWhere(taskArray, {uniqueId : $(this).closest('.task-wrapper').attr('data-uniqueid')});
 

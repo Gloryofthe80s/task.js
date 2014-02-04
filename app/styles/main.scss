@@ -15,6 +15,10 @@ $dark-blue: #193441;
                 inset 0 1px 0 rgba(0, 0, 0, $opacity2);
 }
 
+@mixin sexy-font-shadow($opacity:0.15){
+    text-shadow: 0 1px 0 rgba(0, 0, 0, $opacity);
+}
+
 // ------ BASICS ------
 
 .browsehappy {
@@ -32,6 +36,7 @@ body {
     font-family: 'Source Sans Pro', sans-serif;
     font-weight: 200; //or 400
     padding-bottom: 80px;
+    @include sexy-font-shadow();
 
 }
 
@@ -109,6 +114,7 @@ body {
 
 .header {
     font-weight: 400;
+    text-shadow: none;
 }
 .page-title {
     color:$dark-blue;
@@ -199,6 +205,10 @@ body {
 .btn-mark-completed {
     display: inline-block;
     margin: 0 auto;
+
+    &.active {
+        background-color: green;
+    }
 }
 
 .btn-trash-task {
