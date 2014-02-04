@@ -2,6 +2,21 @@ $icon-font-path: "/bower_components/sass-bootstrap/fonts/";
 
 @import 'sass-bootstrap/lib/bootstrap';
 
+// ------ VARIABLES & MIXINS ------
+
+$white: #FCFFF5;
+$cream: #D1DBBD;
+$green: #91AA9D;
+$light-blue: #3E606F;
+$dark-blue: #193441;
+
+@mixin sexy-emboss($opacity:0.8, $opacity2:0.05) {
+    box-shadow: 0 1px 0 rgba(255, 255, 255, $opacity),
+                inset 0 1px 0 rgba(0, 0, 0, $opacity2);
+}
+
+// ------ BASICS ------
+
 .browsehappy {
     margin: 0.2em 0;
     background: #ccc;
@@ -9,10 +24,15 @@ $icon-font-path: "/bower_components/sass-bootstrap/fonts/";
     padding: 0.2em 0;
 }
 
-/* Space out content a bit */
 body {
-    padding-top: 20px;
-    padding-bottom: 20px;
+    margin: 0;
+    padding: 0;
+    vertical-align: top;
+    background-color: $white;
+    font-family: 'Source Sans Pro', sans-serif;
+    font-weight: 200; //or 400
+    padding-bottom: 80px;
+
 }
 
 /* Everything but the jumbotron gets side spacing for mobile first views */
@@ -29,6 +49,7 @@ body {
 
     /* Make the masthead heading the same height as the navigation */
     h3 {
+        font-size: 28px;
         margin-top: 0;
         margin-bottom: 0;
         line-height: 40px;
@@ -47,24 +68,6 @@ body {
     margin: 30px 0;
 }
 
-/* Main marketing message and sign up button */
-.jumbotron {
-    text-align: center;
-    border-bottom: 1px solid #e5e5e5;
-    .btn {
-        font-size: 21px;
-        padding: 14px 24px;
-    }
-}
-
-/* Supporting marketing content */
-.marketing {
-    margin: 40px 0;
-    p + h4 {
-        margin-top: 28px;
-    }
-}
-
 /* Responsive: Portrait tablets and up */
 @media screen and (min-width: 768px) {
     .container {
@@ -81,11 +84,132 @@ body {
 
     /* Space out the masthead */
     .header {
+        margin-top: 20px;
         margin-bottom: 30px;
     }
-    
+
     /* Remove the bottom border on the jumbotron for visual effect */
     .jumbotron {
         border-bottom: 0;
     }
+}
+
+.shadow-toggle {
+  background-color: rgba(0, 0, 0, .5);
+  display: none;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  z-index: 5;
+
+  &.active {
+    display: block;
+  }
+}
+
+.header {
+    font-weight: 400;
+}
+.page-title {
+    color:$dark-blue;
+}
+
+.new-task-container {
+    padding: 10px 0;
+    text-align: center;
+    background-color: $cream;
+    border-radius: 10px;
+    @include sexy-emboss(0.8, 0.025);
+}
+
+.create-new-task {
+    height: 40px;
+    width: 250px;
+    text-align: center;
+    border-radius: 10px;
+    border: 0;
+    background-color: white;
+    padding: 0 10px;
+    font-size: 22px;
+    @include sexy-emboss();
+}
+
+.printed-task-container {
+    padding: 0;
+    margin-bottom: 30px;
+    text-align: center;
+    background-color: $white;
+    border-radius: 0 0 8px 8px;
+}
+
+// ------ PRINTED TASK STYLE ------
+
+
+.task-wrapper {
+    // height: 80px;
+    background-color: $light-blue;
+    padding: 10px 10px;
+    margin-top: 5px;
+    border-radius: 10px;
+    @include sexy-emboss();
+
+    &.completed {
+        background-color: rgba(75, 75, 75, 0.25);
+        text-decoration: line-through;
+    }
+}
+
+.task-side-left {
+    width: 75%;
+    position: relative;
+    display: inline-block;
+    margin-left: 0;
+    text-align: left;
+}
+
+.task-side-right {
+    width: 24%;
+    position: relative;
+    display: inline-block;
+    float: right;
+}
+
+.task-name {
+    display: inline-block;
+    text-align: left;
+    font-size: 26px;
+    font-weight: 400;
+    color: white;
+
+    p {
+        margin: 0;
+    }
+}
+
+.task-btns {
+    margin-left: 72px;
+    margin-top: 3px;
+    visibility: hidden;
+
+    &.hovered {
+        visibility: visible;
+    }
+}
+
+.btn-mark-completed {
+    display: inline-block;
+    margin: 0 auto;
+}
+
+.btn-trash-task {
+    display: inline-block;
+    margin: 0 auto;
+}
+
+.btn-new-task {
+    background-color: $light-blue;
+}
+
+.footer {
+    color: $dark-blue;
 }

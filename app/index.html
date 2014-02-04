@@ -4,9 +4,10 @@
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
     <head>
+        <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,400' rel='stylesheet' type='text/css'>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>task_js</title>
+        <title>task.js</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width">
         <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
@@ -24,44 +25,47 @@
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
 
+            <div class="container">
 
-        <div class="container">
             <div class="header">
-                <ul class="nav nav-pills pull-right">
-                    <li class="active"><a href="#">Home</a></li>
-                    <li><a href="#">About</a></li>
-                    <li><a href="#">Contact</a></li>
-                </ul>
-                <h3 class="text-muted">task_js</h3>
+                <h3 class="page-title text-muted">task.js</h3>
+                <!-- <button type="button" class="btn-new-task btn btn-lg btn-success align-right" href="#">
+                    <span class="glyphicon glyphicon-pencil"></span>  New Task!
+                </button> -->
             </div>
 
-            <div class="jumbotron">
-                <h1>'Allo, 'Allo!</h1>
-                <p class="lead">Always a pleasure scaffolding your apps.</p>
-                <p><a class="btn btn-lg btn-success" href="#">Splendid!</a></p>
+            <div class="new-task-container">
+                <input class="create-new-task" placeholder="I need to..."></input>
             </div>
 
-            <div class="row marketing">
-                <div class="col-lg-6">
-                    <h4>HTML5 Boilerplate</h4>
-                    <p>HTML5 Boilerplate is a professional front-end template for building fast, robust, and adaptable web apps or sites.</p>
-
-                    <h4>Sass with Compass</h4>
-                    <p>Compass is an open-source CSS Authoring Framework that uses Sass.</p>
-
-
-                    <h4>Bootstrap</h4>
-                    <p>Sleek, intuitive, and powerful mobile first front-end framework for faster and easier web development.</p>
-
-
-                </div>
-            </div>
+            <div class="printed-task-container"></div>
 
             <div class="footer">
-                <p>made by jacob wielgus</p>
+                <p class="text-right">made by jacob wielgus</p>
             </div>
 
-        </div>
+        </div> <!-- end container -->
+
+        <script class="printedTask" type="text/template">
+            <div class="task-wrapper" data-uniqueid= "<%= uniqueId %>">
+                <div class="task-side-left">
+                    <div class="task-name">
+                        <p class="task-p"><%= task %></p>
+                    </div>
+                </div>
+
+                <div class="task-side-right">
+                    <div class="task-btns btn-group btn-group-md">
+                        <button type="button" class="btn-mark-completed btn btn-default">
+                            <span class="glyphicon glyphicon-ok"></span>
+                        </button>
+                        <button type="button" class="btn-trash-task btn btn-default">
+                            <span class="glyphicon glyphicon-trash"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </script>
 
 
         <!-- build:js scripts/vendor.js -->
