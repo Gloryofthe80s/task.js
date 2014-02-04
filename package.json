@@ -1,7 +1,9 @@
 {
   "name": "task-js",
   "version": "0.0.0",
-  "dependencies": {},
+  "dependencies": {
+    "grunt-cdn": "~0.3.2"
+  },
   "devDependencies": {
     "grunt": "~0.4.1",
     "grunt-contrib-copy": "~0.4.1",
