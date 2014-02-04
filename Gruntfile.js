@@ -323,7 +323,7 @@ module.exports = function (grunt) {
         cdn: {
           options: {
               /** @required - root URL of your CDN (may contains sub-paths as shown below) */
-              cdn: 'https://gloryofthe80s.github.io/task.js/',
+              cdn: 'https://gloryofthe80s.github.com/task.js/',
               /** @optional  - if provided both absolute and relative paths will be converted */
               flatten: true
               /** @optional  - if provided will be added to the default supporting types */
