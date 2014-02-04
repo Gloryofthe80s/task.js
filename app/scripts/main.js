@@ -45,8 +45,26 @@ $('.create-new-task').keypress(function(e) {
         $('.printed-task-container').html('');
 
         _.each(taskArray, function(task, index) {
-              $('.printed-task-container').append(taskTemplate(task));
+            var printedTask = function() {
+                $('.printed-task-container').append(taskTemplate(task));
+            };
+
+            if ($(taskArray[index]).prop('complete') == true) {
+                printedTask();
+                // $().addClass('active');
+                // add active class to .btn-mark
+            } else {
+                printedTask();
+            }
         });
+
+        // iterate over task divs and add back 'completed' class
+        // $.each($('.printed-task-container'), function(index, el) {
+        //     var taskToAddClassTo = _.findWhere(taskArray, {uniqueId : $(el).attr('data-uniqueid')});
+        //     // if(el.attr(data-uniqueid == taskToAddClassTo.uniqueId) {
+        //     //     // code here
+        //     // }
+        // });
 
         //clear the text input
         $(this).val('');
@@ -69,6 +87,7 @@ $('.printed-task-container').on('click', '.btn-mark-completed', function() {
 
     var taskToBeFlaggedCompleted = _.findWhere(taskArray, {uniqueId : $(this).closest('.task-wrapper').attr('data-uniqueid')});
 
+    // toggle completed prop of the task object
     _.each(taskArray, function(task, index) {
         if(task.uniqueId == taskToBeFlaggedCompleted.uniqueId) {
             if( $(taskToBeFlaggedCompleted).prop('complete') == false) {
@@ -76,24 +95,8 @@ $('.printed-task-container').on('click', '.btn-mark-completed', function() {
             } else {
                 $(taskToBeFlaggedCompleted).prop('complete', 'false');
             }
-        } else {
-            console.log("couldn't find correct task object in array!")
-        }
+        };
     });
-
-    // var changeToCompleted = function() {
-    //      _.each(taskArray, function(task, index) {
-    //         if (task.uniqueId == taskToBeFlaggedCompleted.uniqueId) {
-    //             $(taskToBeFlaggedCompleted).toggle(function() {
-    //                 $(taskToBeFlaggedCompleted).prop('complete', 'true');
-    //             }, function() {
-    //                 $(taskToBeFlaggedCompleted).prop('complete', 'false');
-    //             });
-    //         };
-    //     });
-    // };
-
-    // changeToCompleted();
 });
 
 // on 'trash' button press
