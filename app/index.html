@@ -47,7 +47,8 @@
         </div> <!-- end container -->
 
         <script class="printedTask" type="text/template">
-            <div class="task-wrapper" data-uniqueid= "<%= uniqueId %>">
+            <% console.log('complete is', complete) %>
+            <div class="task-wrapper <%= complete ? 'completed' : 'fake-class' %>" data-uniqueid= "<%= uniqueId %>">
                 <div class="task-side-left">
                     <div class="task-name">
                         <p class="task-p"><%= task %></p>

@@ -47,6 +47,7 @@ $('.create-new-task').keypress(function(e) {
         _.each(taskArray, function(task, index) {
             var printedTask = function() {
                 $('.printed-task-container').append(taskTemplate(task));
+                console.log(task.complete);
             };
 
             if ($(taskArray[index]).prop('complete') == true) {
@@ -102,9 +103,9 @@ $('.printed-task-container').on('click', '.btn-mark-completed', function() {
     _.each(taskArray, function(task, index) {
         if(task.uniqueId == taskToBeFlaggedCompleted.uniqueId) {
             if( $(taskToBeFlaggedCompleted).prop('complete') == false) {
-                $(taskToBeFlaggedCompleted).prop('complete', 'true');
+                $(taskToBeFlaggedCompleted).prop('complete', true);
             } else {
-                $(taskToBeFlaggedCompleted).prop('complete', 'false');
+                $(taskToBeFlaggedCompleted).prop('complete', false);
             }
         };
     });

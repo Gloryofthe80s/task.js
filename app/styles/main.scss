@@ -213,6 +213,10 @@ body {
     }
 }
 
+.task-wrapper.completed .btn-mark-completed {
+    background-color: $success;
+}
+
 .btn-trash-task {
     display: inline-block;
     margin: 0 auto;
