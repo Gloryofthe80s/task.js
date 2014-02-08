@@ -191,30 +191,27 @@ body {
 
     p {
         margin: 0;
+
     }
 }
 
 .task-btns {
     margin-left: 72px;
     margin-top: 3px;
-    visibility: hidden;
-
-    &.hovered {
-        visibility: visible;
-    }
+    opacity: 0;
 }
 
 .btn-mark-completed {
     display: inline-block;
     margin: 0 auto;
-
-    &.active {
-        background-color: $success;
-    }
 }
 
 .task-wrapper.completed .btn-mark-completed {
     background-color: $success;
+}
+
+.task-wrapper.completed .task-p {
+    text-decoration: line-through;
 }
 
 .btn-trash-task {

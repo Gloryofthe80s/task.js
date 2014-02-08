@@ -47,25 +47,14 @@ $('.create-new-task').keypress(function(e) {
         _.each(taskArray, function(task, index) {
             var printedTask = function() {
                 $('.printed-task-container').append(taskTemplate(task));
-                console.log(task.complete);
             };
 
             if ($(taskArray[index]).prop('complete') == true) {
                 printedTask();
-                // $().addClass('active');
-                // add active class to .btn-mark
             } else {
                 printedTask();
             }
         });
-
-        // iterate over task divs and add back 'completed' class
-        // $.each($('.printed-task-container'), function(index, el) {
-        //     var taskToAddClassTo = _.findWhere(taskArray, {uniqueId : $(el).attr('data-uniqueid')});
-        //     // if(el.attr(data-uniqueid == taskToAddClassTo.uniqueId) {
-        //     //     // code here
-        //     // }
-        // });
 
         //clear the text input
         $(this).val('');
@@ -74,10 +63,12 @@ $('.create-new-task').keypress(function(e) {
     // on printed task hover
     $('.task-wrapper').on({
         mouseenter: function () {
-            $(this).find('.task-btns').addClass('hovered');
+            $(this).find('.task-btns').stop();
+            $(this).find('.task-btns').animate({opacity: 1}, 150);
         },
         mouseleave: function () {
-            $(this).find('.task-btns').removeClass('hovered');
+            $(this).find('.task-btns').stop();
+            $(this).find('.task-btns').animate({opacity: 0}, 150);
         }
     });
 
@@ -95,7 +86,6 @@ $('.create-new-task').keypress(function(e) {
 // on 'completed' button press
 $('.printed-task-container').on('click', '.btn-mark-completed', function() {
     $(this).closest('.task-wrapper').toggleClass('completed');
-    $(this).closest('.btn-mark-completed').toggleClass('active');
 
     var taskToBeFlaggedCompleted = _.findWhere(taskArray, {uniqueId : $(this).closest('.task-wrapper').attr('data-uniqueid')});
 
