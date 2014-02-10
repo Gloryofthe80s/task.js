@@ -3,7 +3,9 @@
   "private": true,
   "dependencies": {
     "chai": "~1.8.0",
-    "mocha": "~1.14.0"
+    "mocha": "~1.14.0",
+    "underscore": "~1.5.2",
+    "jquery": "~2.1.0"
   },
   "devDependencies": {}
 }

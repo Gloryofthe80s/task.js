@@ -2,6 +2,8 @@
 
 var taskTemplate = _.template($('.printedTask').text());
 
+var tasksCompleted = _.template($('.tasksCompleted').text());
+
 
 
 // ------ DATA HANDLING ------
@@ -14,6 +16,7 @@ function TaskObject(propertyObject) {
     this.uniqueId = _.uniqueId('task_')
 };
 
+// all task objects go into the taskArray
 var taskArray = [];
 
 // ------ EVENT HANDLING ------
@@ -35,25 +38,21 @@ $('.create-new-task').on('focusout', function() {
 
 // submit task creation on enter keypress (and hover effects)
 $('.create-new-task').keypress(function(e) {
+    //on enter keypress, so long as the input isn't empty
     if(e.which == 13 && $(this).val() != '') {
         var input = {
             task: $('.create-new-task').val(),
         };
 
+        // construct the task object and put it in the taskArray
         taskArray.push(new TaskObject(input));
 
+        //'wipe the slate' of tasks
         $('.printed-task-container').html('');
 
-        _.each(taskArray, function(task, index) {
-            var printedTask = function() {
-                $('.printed-task-container').append(taskTemplate(task));
-            };
-
-            if ($(taskArray[index]).prop('complete') == true) {
-                printedTask();
-            } else {
-                printedTask();
-            }
+        //reprint all tasks in the taskArray
+        _.each(taskArray, function(taskObjLit, i) {
+            $('.printed-task-container').append(taskTemplate(taskObjLit));
         });
 
         //clear the text input
@@ -83,10 +82,11 @@ $('.create-new-task').keypress(function(e) {
     });
 });
 
-// on 'completed' button press
+// on 'completed' button click
 $('.printed-task-container').on('click', '.btn-mark-completed', function() {
     $(this).closest('.task-wrapper').toggleClass('completed');
 
+    //find the corresponding task object in the taskArray
     var taskToBeFlaggedCompleted = _.findWhere(taskArray, {uniqueId : $(this).closest('.task-wrapper').attr('data-uniqueid')});
 
     // toggle completed prop of the task object
@@ -101,7 +101,7 @@ $('.printed-task-container').on('click', '.btn-mark-completed', function() {
     });
 });
 
-// on 'trash' button press
+// on 'trash' button click
 $('.printed-task-container').on('click', '.btn-trash-task', function() {
     $(this).closest('.task-wrapper').fadeOut('fast', function() {
         $(this).closest('.task-wrapper').remove();
@@ -116,6 +116,36 @@ $('.printed-task-container').on('click', '.btn-trash-task', function() {
     });
 });
 
+// ------ TESTING SPECIFIC ------
+
+//load up some default tasks
+taskArray = [
+    {
+        task : 'do laundry',
+        complete : false,
+        uniqueId : _.uniqueId('task_')
+    },
+    {
+        task : 'get some milk',
+        complete : false,
+        uniqueId : _.uniqueId('task_')
+    },
+    {
+        task : 'wash your filthy self',
+        complete : false,
+        uniqueId : _.uniqueId('task_')
+    },
+    {
+        task : 'crush your foes',
+        complete : false,
+        uniqueId : _.uniqueId('task_')
+    },
+];
+
+//append them to the container
+_.each(taskArray, function (taskObjLit, i) {
+    $('.printed-task-container').append(taskTemplate(taskObjLit));
+})
 
 }); //---- end JS wrapper
 
