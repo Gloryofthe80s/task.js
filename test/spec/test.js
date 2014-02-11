@@ -7,38 +7,54 @@
 
         describe('a complete button', function () {
 
-            it('on click, adds the completed class (which modifies its appearance) to the corresponding task in the DOM', function () {
+            it('on click, adds the completed class to the corresponding task div in the DOM, and sets task object prop to complete: true', function () {
+                var taskStatus = []
+                $('#task_1').find('.btn-mark-completed').click();
+                _.each(taskArray, el, i) {
+                    taskStatus.push(el.complete);
+                }
 
-                $('.task-wrapper[data-uniqueid="task_1"] > btn-mark-completed').click();
-                console.log($(".task-wrapper[data-uniqueid='footer']"));
+                expect($('#task_1').hasClass('completed'));
 
-                // expect($('.task-wrapper[data-uniqueid="task1"]').css('background-color')).to.equal('rgba(75, 75, 75, 0.25)');
+                //check that only only task_1 (at index 0) is set to complete: true
+                expect(taskStatus[0]).to.be.equal(true);
+                expect(taskStatus[1]).to.be.equal(false);
+                expect(taskStatus[2]).to.be.equal(false);
+                expect(taskStatus[3]).to.be.equal(false);
             });
 
-            it("on click, should change the corresponding task object's completed property to 'true'" , function () {
+            it('if clicked again, toggles the task back to an uncompleted state (removes class and sets task object prop to complete: false)', function () {
+                $('#task_1').find('.btn-mark-completed').click();
+                $('#task_1').find('.btn-mark-completed').click();
 
+                expect(!$('#task_1').hasClass('completed'));
+                expect(taskarray[0.complete]).to.be.equal(false);
             });
 
-            it('if clicked again, toggles the task back to an uncompleted state', function () {
+            it('should only modify the clicked task, and leave all other tasks alone', function () {
+                $('#task_1').find('.btn-mark-completed').click();
 
-            });
+                expect($('#task_1').hasClass('completed'));
+                expect(!$('#task_2').hasClass('completed'));
+                expect(!$('#task_3').hasClass('completed'));
+                expect(!$('#task_4').hasClass('completed'));
 
-            it('should only mark completed the task in the DOM that was clicked', function () {
-
-            });
-
-            it('should only affect the corresponding object in the taskArray completed status', function () {
-
+                // expect() //all other objects in taskArray to be completed: false
             });
         });
 
         describe('a delete button', function () {
             it('on click, should remove the corresponding task element from the DOM', function () {
+                $('#task_1').find('.btn-trash-task').click();
 
+                expect($('#task_1').hasClass('completed'));
             });
 
             it('on click, should remove the corresponding task object from the taskArray', function () {
+                var theOriginalObjectId = taskArray[0].uniqueId;
+                $('#task_1').find('.btn-trash-task').click();
 
+                expect(theOriginalObjectId).to.not.equal(taskArray[0].uniqueId);
             });
         });
 

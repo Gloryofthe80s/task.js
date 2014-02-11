@@ -87,7 +87,7 @@ $('.printed-task-container').on('click', '.btn-mark-completed', function() {
     $(this).closest('.task-wrapper').toggleClass('completed');
 
     //find the corresponding task object in the taskArray
-    var taskToBeFlaggedCompleted = _.findWhere(taskArray, {uniqueId : $(this).closest('.task-wrapper').attr('data-uniqueid')});
+    var taskToBeFlaggedCompleted = _.findWhere(taskArray, {uniqueId : $(this).closest('.task-wrapper').attr('id')});
 
     // toggle completed prop of the task object
     _.each(taskArray, function(task, index) {
@@ -107,7 +107,7 @@ $('.printed-task-container').on('click', '.btn-trash-task', function() {
         $(this).closest('.task-wrapper').remove();
     });
 
-    var taskToBeDeleted = _.findWhere(taskArray, {uniqueId : $(this).closest('.task-wrapper').attr('data-uniqueid')});
+    var taskToBeDeleted = _.findWhere(taskArray, {uniqueId : $(this).closest('.task-wrapper').attr('id')});
 
     _.each(taskArray, function(task, index) {
         if (task.uniqueId == taskToBeDeleted.uniqueId) {
@@ -119,33 +119,33 @@ $('.printed-task-container').on('click', '.btn-trash-task', function() {
 // ------ TESTING SPECIFIC ------
 
 //load up some default tasks
-taskArray = [
-    {
-        task : 'do laundry',
-        complete : false,
-        uniqueId : _.uniqueId('task_')
-    },
-    {
-        task : 'get some milk',
-        complete : false,
-        uniqueId : _.uniqueId('task_')
-    },
-    {
-        task : 'wash your filthy self',
-        complete : false,
-        uniqueId : _.uniqueId('task_')
-    },
-    {
-        task : 'crush your foes',
-        complete : false,
-        uniqueId : _.uniqueId('task_')
-    },
-];
+// taskArray = [
+//     {
+//         task : 'do laundry',
+//         complete : false,
+//         uniqueId : _.uniqueId('task_')
+//     },
+//     {
+//         task : 'get some milk',
+//         complete : false,
+//         uniqueId : _.uniqueId('task_')
+//     },
+//     {
+//         task : 'wash your filthy self',
+//         complete : false,
+//         uniqueId : _.uniqueId('task_')
+//     },
+//     {
+//         task : 'crush your foes',
+//         complete : false,
+//         uniqueId : _.uniqueId('task_')
+//     },
+// ];
 
-//append them to the container
-_.each(taskArray, function (taskObjLit, i) {
-    $('.printed-task-container').append(taskTemplate(taskObjLit));
-})
+// //append them to the container
+// _.each(taskArray, function (taskObjLit, i) {
+//     $('.printed-task-container').append(taskTemplate(taskObjLit));
+// })
 
 }); //---- end JS wrapper
 
