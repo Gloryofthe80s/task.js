@@ -20,59 +20,7 @@
         var should = chai.should();
     </script>
 
-        <div class="container">
 
-        <div class="header">
-            <h3 class="page-title text-muted">task.js</h3>
-            <!-- <button type="button" class="btn-new-task btn btn-lg btn-success align-right" href="#">
-                <span class="glyphicon glyphicon-pencil"></span>  New Task!
-            </button> -->
-        </div>
-
-        <div class="new-task-container">
-            <input class="create-new-task" placeholder="I need to..."></input>
-        </div>
-
-        <div class="printed-task-container"></div>
-
-        <div class="footer">
-            <p class="text-right">made by <a href="http://gloryoftheeighties.wordpress.com/" target="blank"> jacob wielgus </a></p>
-        </div>
-
-    </div> <!-- end container -->
-
-    <script class="printedTask" type="text/template">
-        <div class="task-wrapper <%= complete ? 'completed' : 'fake-class' %>" data-uniqueid= "<%= uniqueId %>">
-            <div class="task-side-left">
-                <div class="task-name">
-                    <p class="task-p"><%= task %></p>
-                </div>
-            </div>
-
-            <div class="task-side-right">
-                <div class="task-btns btn-group btn-group-md">
-                    <button type="button" class="btn-mark-completed btn btn-default">
-                        <span class="glyphicon glyphicon-ok"></span>
-                    </button>
-                    <button type="button" class="btn-trash-task btn btn-default">
-                        <span class="glyphicon glyphicon-trash"></span>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </script>
-
-    <script class="tasksCompletedCounter" type="text/template">
-        <div class="completed-tasks-wrapper <%= complete ? 'completed' : 'fake-class' %>">
-            <div class="completed-side-left">
-                <div class="completed-tasks-text">
-                    <p></p>
-                </div>
-            </div>
-            <div class="completed-side-right">
-            </div>
-        </div>
-    </script>
 
     <!-- include source files here... -->
     <script src="bower_components/jquery/jquery.js"></script>
@@ -83,6 +31,6 @@
     <!-- include spec files here... -->
     <script src="spec/test.js"></script>
 
-    <script>mocha.run()</script>
+    <script>window.mochaPhantomJS ? mochaPhantomJS.run() : mocha.run()</script>
 </body>
 </html>

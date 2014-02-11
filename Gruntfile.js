@@ -1,4 +1,4 @@
-// Generated on 2014-02-03 using generator-webapp 0.4.7
+// Generated on 2014-02-05 using generator-webapp 0.4.7
 'use strict';
 
 // # Globbing
@@ -9,13 +9,66 @@
 
 module.exports = function (grunt) {
 
+    // underscore-ish extend
+    function extend (obj) {
+        Array.prototype.slice.call(arguments, 1).forEach(function(source) {
+            if (source) {
+                for (var prop in source) {
+                    obj[prop] = source[prop];
+                }
+            }
+        });
+        return obj;
+    }
+
+    var watchBaseConfig = {
+        js: {
+            files: ['<%= yeoman.app %>/scripts/{,*/}*.js'],
+            tasks: ['jshint'],
+            options: {
+                livereload: true
+            }
+        },
+        gruntfile: {
+            files: ['Gruntfile.js']
+        },
+        compass: {
+            files: ['<%= yeoman.app %>/styles/{,*/}*.{scss,sass}'],
+            tasks: ['compass:server', 'autoprefixer']
+        },
+        styles: {
+            files: ['<%= yeoman.app %>/styles/{,*/}*.css'],
+            tasks: ['newer:copy:styles', 'autoprefixer']
+        }
+    }
+
+    var watchLivereloadConfig = {
+      livereload: {
+          options: {
+              livereload: '<%= connect.options.livereload %>'
+          },
+          files: [
+              '<%= yeoman.app %>/*.html',
+              '.tmp/styles/{,*/}*.css',
+              '{.tmp,<%= yeoman.app %>}/scripts/{,*/}*.js',
+              '<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'
+          ]
+      }
+    }
+
+    var watchTestConfig = {
+      test: {
+          files: ['test/spec/{,*/}*.{js,coffee}', '<%= yeoman.app %>/{,*/}*.{js,coffee}'],
+          tasks: ['test']
+      }
+    }
+
     // Load grunt tasks automatically
     require('load-grunt-tasks')(grunt);
 
     // Time how long tasks take. Can help when optimizing build times
     require('time-grunt')(grunt);
 
-    console.log('here!', this.includeCompass);
     // Define the configuration for all the tasks
     grunt.initConfig({
 
@@ -27,46 +80,13 @@ module.exports = function (grunt) {
         },
 
         // Watches files for changes and runs tasks based on the changed files
-        watch: {
-            js: {
-                files: ['<%= yeoman.app %>/scripts/{,*/}*.js'],
-                tasks: ['jshint'],
-                options: {
-                    livereload: true
-                }
-            },
-            jstest: {
-                files: ['test/spec/{,*/}*.js'],
-                tasks: ['test:watch']
-            },
-            gruntfile: {
-                files: ['Gruntfile.js']
-            },
-            compass: {
-                files: ['<%= yeoman.app %>/styles/{,*/}*.{scss,sass}'],
-                tasks: ['compass:server', 'autoprefixer']
-            },
-            styles: {
-                files: ['<%= yeoman.app %>/styles/{,*/}*.css'],
-                tasks: ['newer:copy:styles', 'autoprefixer']
-            },
-            livereload: {
-                options: {
-                    livereload: '<%= connect.options.livereload %>'
-                },
-                files: [
-                    '<%= yeoman.app %>/{,*/}*.html',
-                    '.tmp/styles/{,*/}*.css',
-                    '<%= yeoman.app %>/images/{,*/}*.{gif,jpeg,jpg,png,svg,webp}'
-                ]
-            }
-        },
+        watch: extend(watchBaseConfig, watchLivereloadConfig),
 
         // The actual grunt server settings
         connect: {
             options: {
                 port: 9000,
-                livereload: 35729,
+                livereload: 35728,
                 // Change this to '0.0.0.0' to access the server from outside
                 hostname: 'localhost'
             },
@@ -75,6 +95,17 @@ module.exports = function (grunt) {
                     open: true,
                     base: [
                         '.tmp',
+                        '<%= yeoman.app %>'
+                    ]
+                }
+            },
+            testServer: {
+                options: {
+                    open: true,
+                    port: 9002,
+                    base: [
+                        '.tmp',
+                        'test',
                         '<%= yeoman.app %>'
                     ]
                 }
@@ -129,7 +160,7 @@ module.exports = function (grunt) {
 
 
         // Mocha testing framework configuration options
-        mocha: {
+        mocha_phantomjs: {
             all: {
                 options: {
                     run: true,
@@ -320,24 +351,19 @@ module.exports = function (grunt) {
             }
         },
 
-        cdn: {
-          options: {
-              /** @required - root URL of your CDN (may contains sub-paths as shown below) */
-              cdn: 'https://gloryofthe80s.github.com/task.js/',
-              /** @optional  - if provided both absolute and relative paths will be converted */
-              flatten: true
-              /** @optional  - if provided will be added to the default supporting types */
-              // supportedTypes: { 'phtml': 'html' }
-          },
-          dist: {
-              /** @required  - string (or array of) including grunt glob variables */
-              src: ['./dist/*.html', './dist/styles/{,*/}*{,*/}*.css']
-              /** @optional  - if provided a copy will be stored without modifying original file */
-              // dest: './dist/static/'
-          }
+
+        // Generates a custom Modernizr build that includes only the tests you
+        // reference in your app
+        modernizr: {
+            devFile: '<%= yeoman.app %>/bower_components/modernizr/modernizr.js',
+            outputFile: '<%= yeoman.dist %>/bower_components/modernizr/modernizr.js',
+            files: [
+                '<%= yeoman.dist %>/scripts/{,*/}*.js',
+                '<%= yeoman.dist %>/styles/{,*/}*.css',
+                '!<%= yeoman.dist %>/scripts/vendor/*'
+            ],
+            uglify: true
         },
-
-
 
         // Run some tasks in parallel to speed up build process
         concurrent: {
@@ -388,7 +414,7 @@ module.exports = function (grunt) {
 
         grunt.task.run([
             'connect:test',
-            'mocha'
+            'mocha_phantomjs'
         ]);
     });
 
@@ -401,9 +427,9 @@ module.exports = function (grunt) {
         'cssmin',
         'uglify',
         'copy:dist',
+        'modernizr',
         'rev',
         'usemin',
-        'cdn:dist',
         'htmlmin'
     ]);
 
@@ -413,5 +439,19 @@ module.exports = function (grunt) {
         'build'
     ]);
 
-    grunt.loadNpmTasks('grunt-cdn');
+    grunt.registerTask('watch:test', function() {
+        var config = extend(watchBaseConfig, watchTestConfig)
+        grunt.config('watch', config);
+        grunt.task.run('watch');
+    });
+
+    grunt.registerTask('test-server', [
+        'clean:server',
+        'concurrent:test',
+        'autoprefixer',
+        'connect:testServer',
+        'watch:test'
+    ]);
+
+    grunt.loadNpmTasks('grunt-notify','grunt-mocha-phantomjs');
 };
