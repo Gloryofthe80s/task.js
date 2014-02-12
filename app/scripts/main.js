@@ -118,7 +118,6 @@ $('.printed-task-container').on('click', '.btn-trash-task', function() {
 
 // ------ TESTING SPECIFIC ------
 
-// load up some default tasks
 taskArray = [
     {
         task : 'do laundry',
@@ -142,7 +141,6 @@ taskArray = [
     },
 ];
 
-//append them to the container
 _.each(taskArray, function (taskObjLit, i) {
     $('.printed-task-container').append(taskTemplate(taskObjLit));
 })
