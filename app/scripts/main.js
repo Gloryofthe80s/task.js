@@ -116,35 +116,6 @@ $('.printed-task-container').on('click', '.btn-trash-task', function() {
     });
 });
 
-// ------ TESTING SPECIFIC ------
-
-taskArray = [
-    {
-        task : 'do laundry',
-        complete : false,
-        uniqueId : _.uniqueId('task_')
-    },
-    {
-        task : 'get some milk',
-        complete : false,
-        uniqueId : _.uniqueId('task_')
-    },
-    {
-        task : 'wash your filthy self',
-        complete : false,
-        uniqueId : _.uniqueId('task_')
-    },
-    {
-        task : 'crush your foes',
-        complete : false,
-        uniqueId : _.uniqueId('task_')
-    },
-];
-
-_.each(taskArray, function (taskObjLit, i) {
-    $('.printed-task-container').append(taskTemplate(taskObjLit));
-})
-
 }); //---- end JS wrapper
 
 
