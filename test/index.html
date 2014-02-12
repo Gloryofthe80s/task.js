@@ -29,6 +29,10 @@
     <!-- include spec files here... -->
     <script src="spec/test.js"></script>
 
-    <script>window.mochaPhantomJS ? mochaPhantomJS.run() : mocha.run()</script>
+    <script>
+        $(function(){
+            window.mochaPhantomJS ? mochaPhantomJS.run() : mocha.run()
+        })
+    </script>
 </body>
 </html>
