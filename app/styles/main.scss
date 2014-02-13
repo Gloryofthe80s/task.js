@@ -232,6 +232,20 @@ body {
     text-shadow: none;
 }
 
+.task-input-box {
+    height: 37px;
+    width: 350px;
+    text-align: left;
+    border-radius: 10px;
+    border: 0;
+    background-color: white;
+    padding: 0 10px;
+    font-size: 22px;
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.8), inset 0 1px 0 rgba(0, 0, 0, 0.05);
+    @include sexy-emboss();
+    outline: none;
+}
+
 // ------ TASKS COMPLETED COUNTER STYLES ------
 
 .completed-tasks-wrapper {
