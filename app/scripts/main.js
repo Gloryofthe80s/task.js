@@ -19,6 +19,19 @@ function TaskObject(propertyObject) {
 // all task objects go into the taskArray
 var taskArray = [];
 
+// ------ FUNCTIONS ------
+
+var reprintAllTasks = function() {
+    //wipe the task container of all tasks
+    $('.printed-task-container').html('');
+
+    //reprint all tasks in taskArray
+    _.each(taskArray, function(taskObjLit, i) {
+        $('.printed-task-container').append(taskTemplate(taskObjLit));
+    });
+};
+
+
 // ------ EVENT HANDLING ------
 
 $(document).ready(function() {
@@ -47,13 +60,7 @@ $(document).ready(function() {
             // construct the task object and put it in the taskArray
             taskArray.push(new TaskObject(input));
 
-            //'wipe the slate' of tasks
-            $('.printed-task-container').html('');
-
-            //reprint all tasks in the taskArray
-            _.each(taskArray, function(taskObjLit, i) {
-                $('.printed-task-container').append(taskTemplate(taskObjLit));
-            });
+            reprintAllTasks();
 
             //clear the text input
             $(this).val('');
@@ -107,7 +114,6 @@ $(document).ready(function() {
     // editing printed tasks: on double click
     $('.printed-task-container').on('dblclick', '.task-side-left', function () {
         var clickedBoxId = $(this).parent('.task-wrapper').attr('id');
-        console.log(clickedBoxId); //working
 
         //inject the inputbox, store pre-edited task
         var currentValue = $(this).find('.task-p').text();
@@ -117,10 +123,28 @@ $(document).ready(function() {
         theEditInput.prop('value', currentValue);
         theEditInput.focus();
 
-        //reprint once focus is lost
+        //reprint on enter keypress
+        theEditInput.on('keypress', function (event) {
+            if(event.which == 13) {
+                var newValue = $('.task-input-box').val();
+
+                //find the corresponding task in taskArray and update its value
+                var taskToBeUpdated = _.findWhere(taskArray, {uniqueId : clickedBoxId});
+
+                _.each(taskArray, function(el, i) {
+                    if (el.uniqueId === taskToBeUpdated.uniqueId) {
+                        $(taskToBeUpdated).prop('task', newValue);
+                    }
+                });
+
+                reprintAllTasks();
+
+            }
+        })
+
+        // OR ElSE reprint once focus is lost
         theEditInput.blur(function() {
             var newValue = $('.task-input-box').val();
-            console.log(newValue); //working
 
             //find the corresponding task in taskArray and update its value
             var taskToBeUpdated = _.findWhere(taskArray, {uniqueId : clickedBoxId});
@@ -131,14 +155,13 @@ $(document).ready(function() {
                 }
             });
 
-            //wipe tasks and repreint
+            //wipe tasks and reprint
             $('.printed-task-container').html('');
 
-            _.each(taskArray, function(taskObjLit, i) {
-                $('.printed-task-container').append(taskTemplate(taskObjLit));
-            });
+            reprintAllTasks();
+
         });
-    })
+    });
 
     // on 'trash' button click
     $('.printed-task-container').on('click', '.btn-trash-task', function() {
