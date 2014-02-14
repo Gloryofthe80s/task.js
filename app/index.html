@@ -36,6 +36,16 @@
 
             <div class="printed-task-container"></div>
 
+            <div class="completed-tasks-wrapper" id="completed-counter">
+                <div class="completed-side-left">
+                    <div class="completed-tasks-text">
+                        <span class= "num-remaining">0 tasks left</span>
+                    </div>
+                </div>
+                <div class="completed-side-right">
+                </div>
+            </div>
+
             <div class="footer">
                 <p class="text-right">made by <a href="http://gloryoftheeighties.wordpress.com/" target="blank"> jacob wielgus </a></p>
             </div>
@@ -63,16 +73,8 @@
             </div>
         </script>
 
-        <script class="tasksCompleted" type="text/template">
-            <div class="completed-tasks-wrapper <%= complete ? 'completed' : 'fake-class' %>">
-                <div class="completed-side-left">
-                    <div class="completed-tasks-text">
-                        <p></p>
-                    </div>
-                </div>
-                <div class="completed-side-right">
-                </div>
-            </div>
+        <script class="tasksCompletedCounter" type="text/template">
+
         </script>
 
 

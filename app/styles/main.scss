@@ -11,6 +11,7 @@ $light-blue: #3E606F;
 $dark-blue: #193441;
 $success: rgba(89, 211, 73, 0.75);
 $red: rgba(255, 52, 52, 0.75);
+$gray: #838B8E;
 
 @mixin sexy-emboss($opacity:0.8, $opacity2:0.05) {
     box-shadow: 0 1px 0 rgba(255, 255, 255, $opacity),
@@ -144,7 +145,7 @@ body {
 
 .printed-task-container {
     padding: 0;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
     text-align: center;
     background-color: $white;
     border-radius: 0 0 8px 8px;
@@ -249,11 +250,16 @@ body {
 // ------ TASKS COMPLETED COUNTER STYLES ------
 
 .completed-tasks-wrapper {
-
+    margin-bottom: 20px;
+    padding-left: 13px;
+    font-size: 16px;
+    font-weight: 400;
+    text-shadow: none;
+    color: $gray;
 }
 
 .completed-side-left {
-
+    text-align: left;
 }
 
 .completed-side-right {
@@ -262,9 +268,16 @@ body {
 
 .completed-tasks-text {
 
-    p {
+    .num-remaining {
 
     }
+}
+
+.btn-clear-completed {
+    border-radius: 8px;
+    padding: 4px 10px;
+    background-color: $cream;
+    @include sexy-emboss();
 }
 
 

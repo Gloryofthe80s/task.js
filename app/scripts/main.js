@@ -2,7 +2,7 @@
 
 var taskTemplate = _.template($('.printedTask').text());
 
-var tasksCompleted = _.template($('.tasksCompleted').text());
+var tasksCompletedCounter = _.template($('.tasksCompleted').text());
 
 
 
@@ -21,6 +21,21 @@ var taskArray = [];
 
 // ------ FUNCTIONS ------
 
+var updateEditedTask = function(clickedBoxId) {
+    //store the edited task value
+    var newValue = $('.task-input-box').val();
+
+    //find the corresponding task in taskArray and update its value
+    var taskToBeUpdated = _.findWhere(taskArray, {uniqueId : clickedBoxId});
+
+    //actually update it
+    _.each(taskArray, function(el, i) {
+        if (el.uniqueId === taskToBeUpdated.uniqueId) {
+            $(taskToBeUpdated).prop('task', newValue);
+        }
+    });
+};
+
 var reprintAllTasks = function() {
     //wipe the task container of all tasks
     $('.printed-task-container').html('');
@@ -29,6 +44,26 @@ var reprintAllTasks = function() {
     _.each(taskArray, function(taskObjLit, i) {
         $('.printed-task-container').append(taskTemplate(taskObjLit));
     });
+
+    updateTaskCounter();
+};
+
+var finalizeEdit = function(clickedBoxId) {
+    updateEditedTask(clickedBoxId);
+    reprintAllTasks();
+};
+
+var updateTaskCounter = function () {
+    var taskCounter = $('#completed-counter').find('.num-remaining');
+    var remainingIncompleteTasks = _.where(taskArray, {complete: false});
+
+    if (remainingIncompleteTasks.length === 0) {
+        taskCounter.text('0 tasks left')
+    } else if (remainingIncompleteTasks.length === 1) {
+        taskCounter.text('1 task left')
+    } else {
+        taskCounter.text(remainingIncompleteTasks.length + ' tasks left');
+    }
 };
 
 
@@ -61,6 +96,7 @@ $(document).ready(function() {
             taskArray.push(new TaskObject(input));
 
             reprintAllTasks();
+            updateTaskCounter();
 
             //clear the text input
             $(this).val('');
@@ -109,6 +145,8 @@ $(document).ready(function() {
                 }
             };
         });
+
+        updateTaskCounter();
     });
 
     // editing printed tasks: on double click
@@ -126,42 +164,22 @@ $(document).ready(function() {
         //reprint on enter keypress
         theEditInput.on('keypress', function (event) {
             if(event.which == 13) {
-                var newValue = $('.task-input-box').val();
-
-                //find the corresponding task in taskArray and update its value
-                var taskToBeUpdated = _.findWhere(taskArray, {uniqueId : clickedBoxId});
-
-                _.each(taskArray, function(el, i) {
-                    if (el.uniqueId === taskToBeUpdated.uniqueId) {
-                        $(taskToBeUpdated).prop('task', newValue);
-                    }
-                });
-
-                reprintAllTasks();
-
+                finalizeEdit(clickedBoxId);
             }
-        })
+        });
 
-        // OR ElSE reprint once focus is lost
-        theEditInput.blur(function() {
-            var newValue = $('.task-input-box').val();
-
-            //find the corresponding task in taskArray and update its value
-            var taskToBeUpdated = _.findWhere(taskArray, {uniqueId : clickedBoxId});
-
-            _.each(taskArray, function(el, i) {
-                if (el.uniqueId === taskToBeUpdated.uniqueId) {
-                    $(taskToBeUpdated).prop('task', newValue);
-                }
-            });
-
-            //wipe tasks and reprint
-            $('.printed-task-container').html('');
-
-            reprintAllTasks();
-
+        // OR ELSE reprint once focus is lost
+        theEditInput.on('blur', function () {
+            finalizeEdit(clickedBoxId);
         });
     });
+
+        // theEditInput.blur(function() {
+
+        //     updateEditedTask();
+
+        //     reprintAllTasks();
+        // });
 
     // on 'trash' button click
     $('.printed-task-container').on('click', '.btn-trash-task', function() {
@@ -176,6 +194,8 @@ $(document).ready(function() {
                 taskArray.splice(index, 1);
             };
         });
+
+        updateTaskCounter();
     });
 
     // ------ TESTING STUFF ------
